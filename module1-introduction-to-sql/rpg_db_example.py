@@ -18,6 +18,11 @@ SELECT COUNT(name) FROM charactercreator_character;
 
 #2
 
+#3
+SELECT * FROM armory_item;
+SELECT COUNT(*) FROM armory_item;
+SELECT COUNT(DISTINCT name) FROM armory_item;
+
 #5
 SELECT character_id, COUNT(DISTINCT item_id) FROM
 (SELECT cc.character_id, cc.name AS character_name, ai.item_id, ai.name AS item_name, aw.item_ptr_id AS weapon_name
@@ -33,14 +38,12 @@ LIMIT 20;
 
 #6
 SELECT character_id, COUNT(DISTINCT weapon_name) FROM
-(SELECT cc.character_id, cc.name AS character_name, ai.item_id, ai.name AS item_name, aw.item_ptr_id AS weapon_name
+(SELECT cc.character_id, cc.name AS character_name, aw.item_ptr_id AS weapon_name
 FROM charactercreator_character AS cc,
-armory_item AS ai,
 charactercreator_character_inventory AS cci,
 armory_weapon As aw
 WHERE cc.character_id = cci.character_id
-AND ai.item_id = cci.item_id
-And ai.item_id = aw.item_ptr_id)
+AND aw.item_ptr_id = cci.item_id)
 GROUP BY 1 ORDER BY 2 DESC
 LIMIT 20;
 
